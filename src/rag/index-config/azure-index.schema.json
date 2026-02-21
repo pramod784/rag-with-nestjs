@@ -1,0 +1,70 @@
+{
+  "name": "rag-index",
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "key": true
+    },
+    {
+      "name": "tenantId",
+      "type": "Edm.String",
+      "filterable": true
+    },
+    {
+      "name": "content",
+      "type": "Edm.String",
+      "searchable": true
+    },
+    {
+      "name": "contentType",
+      "type": "Edm.String",
+      "filterable": true
+    },
+    {
+      "name": "author",
+      "type": "Edm.String",
+      "filterable": true
+    },
+    {
+      "name": "createdAt",
+      "type": "Edm.DateTimeOffset",
+      "sortable": true
+    },
+    {
+      "name": "contentVector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "dimensions": 1536,
+      "vectorSearchProfile": "vector-profile"
+    }
+  ],
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "hnsw-config",
+        "kind": "hnsw"
+      }
+    ],
+    "profiles": [
+      {
+        "name": "vector-profile",
+        "algorithm": "hnsw-config"
+      }
+    ]
+  },
+  "semantic": {
+    "configurations": [
+      {
+        "name": "default",
+        "prioritizedFields": {
+          "prioritizedContentFields": [
+            {
+              "fieldName": "content"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
